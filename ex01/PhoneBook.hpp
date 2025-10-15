@@ -41,15 +41,14 @@ class Contact {
         std::string phoneNum;
 
     public:
-        Contact();
-        Contact(
-            std::string newFirstName,
-            std::string newLastName,
-            std::string newNickName,
-            std::string newDarkestSecret,
-            std::string newPhoneNum
-            );
-        ~Contact();
+        Contact() {}
+        ~Contact() {}
+
+        void setFirstName(const std::string& value)     { firstName = value; }
+        void setLastName(const std::string& value)      { lastName = value; }
+        void setNickName(const std::string& value)      { nickName = value; }
+        void setPhoneNum(const std::string& value)      { phoneNum = value; }
+        void setDarkestSecret(const std::string& value) { darkestSecret = value; }
 };
 
 class PhoneBook {
@@ -57,6 +56,7 @@ class PhoneBook {
         Contact contacts[MAX_CONTACTS];
         Contact newContact;
         int     contactsAdded;
+        int     oldestIdx;
 
         void                displayWelcome();
         cmd::ECommand       promptForCommand();
@@ -66,10 +66,11 @@ class PhoneBook {
         void                displayList();
         void                promptForContact();
         Contact             getContact(int  idx);
+        std::string         promptForField(const std::string&);
 
     public:
-        PhoneBook();
-        ~PhoneBook();
+        PhoneBook() : contactsAdded(0), oldestIdx(0) {}
+        ~PhoneBook() {}
 
         void    run();
 };

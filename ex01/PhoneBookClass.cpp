@@ -12,8 +12,6 @@
 
 #include "PhoneBook.hpp"
 
-PhoneBook::PhoneBook() : contactsAdded(0)
-{}
 
 PhoneBook::~PhoneBook() {
     std::cout << "GOODBYE!!!" << std::endl;
@@ -59,6 +57,41 @@ cmd::ECommand   PhoneBook::promptForCommand() {
     else if (cmdStr.compare("SEARCH") == 0) return (cmd::SEARCH);
     else if (cmdStr.compare("EXIT") == 0)   return (cmd::EXIT);
     else                                    return (cmd::INVALID);
+}
+
+void    PhoneBook::addContact() {
+    Contact     newContact;
+    std::string newField;
+
+    if (oldestIdx == MAX_CONTACTS) oldestIdx = 0;
+
+    newContact.setFirstName(promptForField("first name"));
+    newContact.setLastName(promptForField("last name"));
+    newContact.setNickName(promptForField("nick name"));
+    newContact.setPhoneNum(promptForField("phone number"));
+    newContact.setDarkestSecret(promptForField("darkest secret"));
+
+    if (contactsAdded == MAX_CONTACTS) {
+        contacts[oldestIdx] = newContact;
+        oldestIdx++;
+        std::cout << "Oldest contact replaced successfully!" << std::endl;
+        return ;
+    }
+
+    contacts[contactsAdded] = newContact;
+    contactsAdded++;
+    std::cout << "Contact created successfully!" << std::endl;
+}
+
+std::string PhoneBook::promptForField(const std::string& fieldName) {
+    std::string inputField;
+
+    do
+    {
+        std::cout << fieldName << ": ";
+        std::getline(std::cin, inputField);
+    } while (inputField.empty());
+    return (inputField);
 }
 
 void    PhoneBook::displayCommandList() {

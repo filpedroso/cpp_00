@@ -12,23 +12,3 @@
 
 #include "PhoneBook.hpp"
 
-Contact::Contact(
-            std::string firstName,
-            std::string lastName,
-            std::string nickName,
-            std::string darkestSecret,
-            std::string phoneNum
-            )
-            : firstName(firstName),
-            lastName(lastName),
-            nickName(nickName),
-            darkestSecret(darkestSecret),
-            phoneNum(phoneNum)
-{
-    std::cout << "Contact created successfully!" << std::endl;
-}
-
-Contact::~Contact()
-{
-    std::cout << "Contact destroyed." << std::endl;
-}
