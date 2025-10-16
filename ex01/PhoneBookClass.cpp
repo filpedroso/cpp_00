@@ -47,6 +47,16 @@ void    PhoneBook::displayWelcome() {
     system("clear");
 }
 
+void    PhoneBook::displayCommandList() {
+    std::cout << "PLEASE TYPE COMMAND:" << std::endl << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    std::cout << "ADD" << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    std::cout << "SEARCH" << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    std::cout << "EXIT" << std::endl;
+}
+
 cmd::ECommand   PhoneBook::promptForCommand() {
     std::string     cmdStr;
 
@@ -94,12 +104,14 @@ std::string PhoneBook::promptForField(const std::string& fieldName) {
     return (inputField);
 }
 
-void    PhoneBook::displayCommandList() {
-    std::cout << "PLEASE TYPE COMMAND:" << std::endl << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(300));
-    std::cout << "ADD" << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(300));
-    std::cout << "SEARCH" << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(300));
-    std::cout << "EXIT" << std::endl;
+
+void    PhoneBook::searchContacts() {
+    u_short contactIdx;
+
+    do
+    {
+        displayContactList();
+        contactIdx = getContactIdx();
+
+    } while (contactIdx >= MAX_CONTACTS);
 }

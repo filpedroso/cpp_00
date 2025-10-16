@@ -63,9 +63,9 @@ class PhoneBook {
         void                displayCommandList();
         void                addContact();
         void                searchContacts();
-        void                displayList();
+        void                displayContactList();
         void                promptForContact();
-        Contact             getContact(int  idx);
+        Contact             getContact(int);
         std::string         promptForField(const std::string&);
 
     public:
