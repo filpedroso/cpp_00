@@ -20,7 +20,8 @@
 #include <iostream>
 #include <cctype>
 
-#define MAX_CONTACTS 8
+const	short MaxContacts = 8;
+
 
 namespace cmd {
     enum   ECommand
