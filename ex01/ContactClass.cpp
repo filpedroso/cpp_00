@@ -12,3 +12,10 @@
 
 #include "PhoneBook.hpp"
 
+void    Contact::displayItself() {
+    std::cout << this->firstName << std::endl;
+    std::cout << this->lastName << std::endl;
+    std::cout << this->nickName << std::endl;
+    std::cout << this->phoneNum << std::endl;
+    std::cout << this->darkestSecret << std::endl;
+}

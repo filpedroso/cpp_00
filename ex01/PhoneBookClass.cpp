@@ -48,13 +48,13 @@ void    PhoneBook::displayWelcome() {
 }
 
 void    PhoneBook::displayCommandList() {
-    std::cout << "PLEASE TYPE COMMAND:" << std::endl << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(300));
     std::cout << "ADD" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(300));
     std::cout << "SEARCH" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(300));
-    std::cout << "EXIT" << std::endl;
+    std::cout << "EXIT" << std::endl << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    std::cout << "please type command:" << std::endl;
 }
 
 cmd::ECommand   PhoneBook::promptForCommand() {
@@ -73,7 +73,7 @@ void    PhoneBook::addContact() {
     Contact     newContact;
     std::string newField;
 
-    if (oldestIdx == MAX_CONTACTS) oldestIdx = 0;
+    if (oldestIdx == MaxContacts) oldestIdx = 0;
 
     newContact.setFirstName(promptForField("first name"));
     newContact.setLastName(promptForField("last name"));
@@ -81,7 +81,7 @@ void    PhoneBook::addContact() {
     newContact.setPhoneNum(promptForField("phone number"));
     newContact.setDarkestSecret(promptForField("darkest secret"));
 
-    if (contactsAdded == MAX_CONTACTS) {
+    if (contactsAdded == MaxContacts) {
         contacts[oldestIdx] = newContact;
         oldestIdx++;
         std::cout << "Oldest contact replaced successfully!" << std::endl;
@@ -90,7 +90,10 @@ void    PhoneBook::addContact() {
 
     contacts[contactsAdded] = newContact;
     contactsAdded++;
+    system("clear");
     std::cout << "Contact created successfully!" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    system("clear");
 }
 
 std::string PhoneBook::promptForField(const std::string& fieldName) {
@@ -106,12 +109,49 @@ std::string PhoneBook::promptForField(const std::string& fieldName) {
 
 
 void    PhoneBook::searchContacts() {
-    u_short contactIdx;
+    char    c;
+    u_short contactIdx = 0;
 
     do
     {
         displayContactList();
-        contactIdx = getContactIdx();
-
-    } while (contactIdx >= MAX_CONTACTS);
+        std::cout << "TYPE CONTACT INDEX" << std::endl;
+        std::cin.get(c);
+        if ((c >= '0') && (c < '0') + contactsAdded) {
+            contactIdx = c - '0';
+            break;
+        }
+        std::cout << "INVALID INPUT" << std::endl;
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        system("clear");
+    } while (contactIdx >= contactsAdded);
+    contacts[contactIdx].displayItself();
 }
+
+
+void    PhoneBook::displayContactList() {
+    std::system("clear");
+
+    for (ushort i = 0; i < contactsAdded; i++) {
+        std::cout << "INDEX: " << i << std::endl;
+        displayFormattedField(contacts[i].getFirstName());    std::cout << '|';
+        displayFormattedField(contacts[i].getLastName());     std::cout << '|';
+        displayFormattedField(contacts[i].getNickName());     std::cout << '|';
+        displayFormattedField(contacts[i].getPhoneNum());     std::cout << '|';
+        displayFormattedField(contacts[i].getDarkestSecret());
+        std::cout << std::endl;
+    }
+    return ;
+}
+
+void    PhoneBook::displayFormattedField(const std::string& str) const {
+
+    std::cout << std::right << std::setw(ColumnWidth) << std::setfill(' ');
+
+    if (str.length() > ColumnWidth) {
+        std::cout << str.substr(0, ColumnWidth - 1) + ".";
+    }
+    else { std::cout << str; }
+}
+
+/* ************************************************************************** */

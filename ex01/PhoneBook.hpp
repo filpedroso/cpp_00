@@ -18,9 +18,14 @@
 #include <chrono>
 #include <cstdlib>
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 #include <cctype>
 
-const	short MaxContacts = 8;
+const short MaxContacts = 8;
+const short NFields     = 5;
+const short OutOfRange  = MaxContacts + 1;
+const short ColumnWidth = 10;
 
 
 namespace cmd {
@@ -45,19 +50,29 @@ class Contact {
         Contact() {}
         ~Contact() {}
 
+        void    displayItself();
+
+        /* setters */
         void setFirstName(const std::string& value)     { firstName = value; }
         void setLastName(const std::string& value)      { lastName = value; }
         void setNickName(const std::string& value)      { nickName = value; }
         void setPhoneNum(const std::string& value)      { phoneNum = value; }
         void setDarkestSecret(const std::string& value) { darkestSecret = value; }
+
+        /* getters */
+        std::string getFirstName() const        { return firstName; }
+        std::string getLastName() const         { return lastName; }
+        std::string getNickName() const         { return nickName; }
+        std::string getPhoneNum() const         { return darkestSecret; }
+        std::string getDarkestSecret() const    { return phoneNum; }
 };
 
 class PhoneBook {
     private:
-        Contact contacts[MAX_CONTACTS];
-        Contact newContact;
-        int     contactsAdded;
-        int     oldestIdx;
+        Contact     contacts[MaxContacts];
+        Contact     newContact;
+        ushort      contactsAdded;
+        ushort      oldestIdx;
 
         void                displayWelcome();
         cmd::ECommand       promptForCommand();
@@ -66,12 +81,14 @@ class PhoneBook {
         void                searchContacts();
         void                displayContactList();
         void                promptForContact();
+        ushort              getContactIdx();
         Contact             getContact(int);
+        void                displayFormattedField(const std::string&) const;
         std::string         promptForField(const std::string&);
 
     public:
         PhoneBook() : contactsAdded(0), oldestIdx(0) {}
-        ~PhoneBook() {}
+        ~PhoneBook();
 
         void    run();
 };
