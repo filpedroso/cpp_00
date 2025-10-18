@@ -42,19 +42,19 @@ void    PhoneBook::run() {
 }
 
 void    PhoneBook::displayWelcome() {
-    std::cout << "WELCOME!!!" << std::endl;
+    std::cout << C_TITLE << "WELCOME!!!" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(1));
     system("clear");
 }
 
 void    PhoneBook::displayCommandList() {
-    std::cout << "ADD" << std::endl;
+    std::cout << C_INDEX << "ADD" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(300));
     std::cout << "SEARCH" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(300));
     std::cout << "EXIT" << std::endl << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(300));
-    std::cout << "please type command:" << std::endl;
+    std::cout << "Please type command: ";
 }
 
 cmd::ECommand   PhoneBook::promptForCommand() {
@@ -74,7 +74,7 @@ void    PhoneBook::addContact() {
     std::string newField;
 
     if (oldestIdx == MaxContacts) oldestIdx = 0;
-
+    system("clear");
     newContact.setFirstName(promptForField("first name"));
     newContact.setLastName(promptForField("last name"));
     newContact.setNickName(promptForField("nick name"));
@@ -84,14 +84,14 @@ void    PhoneBook::addContact() {
     if (contactsAdded == MaxContacts) {
         contacts[oldestIdx] = newContact;
         oldestIdx++;
-        std::cout << "Oldest contact replaced successfully!" << std::endl;
+        std::cout << C_SUCCESS << "Oldest contact replaced successfully!" << std::endl;
         return ;
     }
 
     contacts[contactsAdded] = newContact;
     contactsAdded++;
     system("clear");
-    std::cout << "Contact created successfully!" << std::endl;
+    std::cout << C_SUCCESS << "Contact created successfully!" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(1));
     system("clear");
 }
@@ -101,44 +101,48 @@ std::string PhoneBook::promptForField(const std::string& fieldName) {
 
     do
     {
-        std::cout << fieldName << ": ";
+        std::cout << C_PROMPT << fieldName << ": ";
         std::getline(std::cin, inputField);
     } while (inputField.empty());
     return (inputField);
 }
 
+void PhoneBook::searchContacts() {
+    std::string input;
+    size_t      contactIdx;
+    bool        valid = false;
 
-void    PhoneBook::searchContacts() {
-    char    c;
-    u_short contactIdx = 0;
-
-    do
-    {
+    do {
         displayContactList();
-        std::cout << "TYPE CONTACT INDEX" << std::endl;
-        std::cin.get(c);
-        if ((c >= '0') && (c < '0') + contactsAdded) {
-            contactIdx = c - '0';
-            break;
-        }
-        std::cout << "INVALID INPUT" << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-        system("clear");
-    } while (contactIdx >= contactsAdded);
-    contacts[contactIdx].displayItself();
-}
+        std::cout << C_PROMPT <<"Enter contact index: ";
+        std::getline(std::cin, input);
 
+        std::stringstream ss(input);
+        if ((ss >> contactIdx) && ss.eof() && contactIdx < contactsAdded) {
+            valid = true;
+        } else {
+            system("clear");
+            std::cout << C_WARNING << "INVALID INPUT!!!" << std::endl;
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            system("clear");
+        }
+    } while (!valid);
+    system("clear");
+    contacts[contactIdx].displayItself();
+    std::cout << std::endl;
+}
 
 void    PhoneBook::displayContactList() {
     std::system("clear");
 
     for (ushort i = 0; i < contactsAdded; i++) {
-        std::cout << "INDEX: " << i << std::endl;
+        std::cout << C_INDEX << "INDEX: " << i << std::endl;
         displayFormattedField(contacts[i].getFirstName());    std::cout << '|';
         displayFormattedField(contacts[i].getLastName());     std::cout << '|';
         displayFormattedField(contacts[i].getNickName());     std::cout << '|';
         displayFormattedField(contacts[i].getPhoneNum());     std::cout << '|';
         displayFormattedField(contacts[i].getDarkestSecret());
+        std::cout << std::endl;
         std::cout << std::endl;
     }
     return ;
