@@ -19,9 +19,19 @@ PhoneBook::~PhoneBook() {
     system("clear");
 }
 
+void PhoneBook::setBackground(const std::string& bgColor) {
+    std::cout << bgColor;
+
+    for (int i = 0; i < 50; ++i) { std::cout << std::string(200, ' ') << "\n"; }
+    std::cout << "\033[H";
+    std::cout.flush();
+    std::cout << TXT_BOLD << TXT_GREEN;
+}
+
 void    PhoneBook::run() {
     cmd::ECommand  command;
 
+    setBackground(TXT_BG_BLACK);
     displayWelcome();
     do
     {
@@ -42,13 +52,13 @@ void    PhoneBook::run() {
 }
 
 void    PhoneBook::displayWelcome() {
-    std::cout << C_TITLE << "WELCOME!!!" << std::endl;
+    std::cout << "WELCOME!!!" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(1));
     system("clear");
 }
 
 void    PhoneBook::displayCommandList() {
-    std::cout << C_INDEX << "ADD" << std::endl;
+    std::cout << "ADD" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(300));
     std::cout << "SEARCH" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(300));
@@ -84,14 +94,14 @@ void    PhoneBook::addContact() {
     if (contactsAdded == MaxContacts) {
         contacts[oldestIdx] = newContact;
         oldestIdx++;
-        std::cout << C_SUCCESS << "Oldest contact replaced successfully!" << std::endl;
+        std::cout << "Oldest contact replaced successfully!" << std::endl;
         return ;
     }
 
     contacts[contactsAdded] = newContact;
     contactsAdded++;
     system("clear");
-    std::cout << C_SUCCESS << "Contact created successfully!" << std::endl;
+    std::cout << "Contact created successfully!" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(1));
     system("clear");
 }
@@ -101,7 +111,7 @@ std::string PhoneBook::promptForField(const std::string& fieldName) {
 
     do
     {
-        std::cout << C_PROMPT << fieldName << ": ";
+        std::cout << fieldName << ": ";
         std::getline(std::cin, inputField);
     } while (inputField.empty());
     return (inputField);
@@ -114,7 +124,7 @@ void PhoneBook::searchContacts() {
 
     do {
         displayContactList();
-        std::cout << C_PROMPT <<"Enter contact index: ";
+        std::cout <<"Enter contact index: ";
         std::getline(std::cin, input);
 
         std::stringstream ss(input);
@@ -122,7 +132,7 @@ void PhoneBook::searchContacts() {
             valid = true;
         } else {
             system("clear");
-            std::cout << C_WARNING << "INVALID INPUT!!!" << std::endl;
+            std::cout << "INVALID INPUT!!!" << std::endl;
             std::this_thread::sleep_for(std::chrono::seconds(2));
             system("clear");
         }
@@ -135,13 +145,18 @@ void PhoneBook::searchContacts() {
 void    PhoneBook::displayContactList() {
     std::system("clear");
 
+    std::cout << std::right << std::setw(ColumnWidth) << std::setfill(' ');
+    std::cout   << "INDEX"      << '|'
+                << "FIRST NAME" << '|'
+                << "LAST NAME"  << '|'
+                << "NICK NAME"  << '|'
+                << std::endl << std::endl;
     for (ushort i = 0; i < contactsAdded; i++) {
-        std::cout << C_INDEX << "INDEX: " << i << std::endl;
+        std::cout << std::right << std::setw(ColumnWidth) << std::setfill(' ');
+        std::cout << i << '|';
         displayFormattedField(contacts[i].getFirstName());    std::cout << '|';
         displayFormattedField(contacts[i].getLastName());     std::cout << '|';
-        displayFormattedField(contacts[i].getNickName());     std::cout << '|';
-        displayFormattedField(contacts[i].getPhoneNum());     std::cout << '|';
-        displayFormattedField(contacts[i].getDarkestSecret());
+        displayFormattedField(contacts[i].getNickName());
         std::cout << std::endl;
         std::cout << std::endl;
     }
@@ -149,9 +164,6 @@ void    PhoneBook::displayContactList() {
 }
 
 void    PhoneBook::displayFormattedField(const std::string& str) const {
-
-    std::cout << std::right << std::setw(ColumnWidth) << std::setfill(' ');
-
     if (str.length() > ColumnWidth) {
         std::cout << str.substr(0, ColumnWidth - 1) + ".";
     }
