@@ -119,6 +119,15 @@ void PhoneBook::searchContacts()
     size_t contactIdx;
     bool valid = false;
 
+    if (contactsAdded == 0)
+    {
+        system("clear");
+        std::cout << "NO CONTACTS YET!!!" << "\n";
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        system("clear");
+        return ;
+    }
+
     do
     {
         displayContactList();
