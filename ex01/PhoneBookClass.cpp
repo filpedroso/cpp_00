@@ -12,24 +12,9 @@
 
 #include "PhoneBook.hpp"
 
-
-PhoneBook::~PhoneBook() {
-    std::cout << "GOODBYE!!!" << std::endl;
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    system("clear");
-}
-
-void PhoneBook::setBackground(const std::string& bgColor) {
-    std::cout << bgColor;
-
-    for (int i = 0; i < 50; ++i) { std::cout << std::string(200, ' ') << "\n"; }
-    std::cout << "\033[H";
-    std::cout.flush();
-    std::cout << TXT_BOLD << TXT_GREEN;
-}
-
-void    PhoneBook::run() {
-    cmd::ECommand  command;
+void PhoneBook::run()
+{
+    cmd::ECommand command;
 
     setBackground(TXT_BG_BLACK);
     displayWelcome();
@@ -51,13 +36,15 @@ void    PhoneBook::run() {
     } while (command != cmd::EXIT);
 }
 
-void    PhoneBook::displayWelcome() {
+void PhoneBook::displayWelcome()
+{
     std::cout << "WELCOME!!!" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(1));
     system("clear");
 }
 
-void    PhoneBook::displayCommandList() {
+void PhoneBook::displayCommandList()
+{
     std::cout << "ADD" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(300));
     std::cout << "SEARCH" << std::endl;
@@ -67,23 +54,30 @@ void    PhoneBook::displayCommandList() {
     std::cout << "Please type command: ";
 }
 
-cmd::ECommand   PhoneBook::promptForCommand() {
-    std::string     cmdStr;
+cmd::ECommand PhoneBook::promptForCommand()
+{
+    std::string cmdStr;
 
     displayCommandList();
     std::getline(std::cin, cmdStr);
 
-    if      (cmdStr.compare("ADD") == 0)    return (cmd::ADD);
-    else if (cmdStr.compare("SEARCH") == 0) return (cmd::SEARCH);
-    else if (cmdStr.compare("EXIT") == 0)   return (cmd::EXIT);
-    else                                    return (cmd::INVALID);
+    if (cmdStr.compare("ADD") == 0)
+        return (cmd::ADD);
+    else if (cmdStr.compare("SEARCH") == 0)
+        return (cmd::SEARCH);
+    else if (cmdStr.compare("EXIT") == 0)
+        return (cmd::EXIT);
+    else
+        return (cmd::INVALID);
 }
 
-void    PhoneBook::addContact() {
-    Contact     newContact;
+void PhoneBook::addContact()
+{
+    Contact newContact;
     std::string newField;
 
-    if (oldestIdx == MaxContacts) oldestIdx = 0;
+    if (oldestIdx == MaxContacts)
+        oldestIdx = 0;
     system("clear");
     newContact.setFirstName(promptForField("first name"));
     newContact.setLastName(promptForField("last name"));
@@ -91,11 +85,12 @@ void    PhoneBook::addContact() {
     newContact.setPhoneNum(promptForField("phone number"));
     newContact.setDarkestSecret(promptForField("darkest secret"));
 
-    if (contactsAdded == MaxContacts) {
+    if (contactsAdded == MaxContacts)
+    {
         contacts[oldestIdx] = newContact;
         oldestIdx++;
         std::cout << "Oldest contact replaced successfully!" << std::endl;
-        return ;
+        return;
     }
 
     contacts[contactsAdded] = newContact;
@@ -106,7 +101,8 @@ void    PhoneBook::addContact() {
     system("clear");
 }
 
-std::string PhoneBook::promptForField(const std::string& fieldName) {
+std::string PhoneBook::promptForField(const std::string& fieldName)
+{
     std::string inputField;
 
     do
@@ -117,20 +113,25 @@ std::string PhoneBook::promptForField(const std::string& fieldName) {
     return (inputField);
 }
 
-void PhoneBook::searchContacts() {
+void PhoneBook::searchContacts()
+{
     std::string input;
-    size_t      contactIdx;
-    bool        valid = false;
+    size_t contactIdx;
+    bool valid = false;
 
-    do {
+    do
+    {
         displayContactList();
-        std::cout <<"Enter contact index: ";
+        std::cout << "Enter contact index: ";
         std::getline(std::cin, input);
 
         std::stringstream ss(input);
-        if ((ss >> contactIdx) && ss.eof() && contactIdx < contactsAdded) {
+        if ((ss >> contactIdx) && ss.eof() && contactIdx < contactsAdded)
+        {
             valid = true;
-        } else {
+        }
+        else
+        {
             system("clear");
             std::cout << "INVALID INPUT!!!" << std::endl;
             std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -142,32 +143,59 @@ void PhoneBook::searchContacts() {
     std::cout << std::endl;
 }
 
-void    PhoneBook::displayContactList() {
+void PhoneBook::displayContactList()
+{
     std::system("clear");
 
     std::cout << std::right << std::setw(ColumnWidth) << std::setfill(' ');
-    std::cout   << "INDEX"      << '|'
-                << "FIRST NAME" << '|'
-                << "LAST NAME"  << '|'
-                << "NICK NAME"  << '|'
-                << std::endl << std::endl;
-    for (ushort i = 0; i < contactsAdded; i++) {
+    std::cout << "INDEX" << '|' << "FIRST NAME" << '|' << "LAST NAME" << '|'
+              << "NICK NAME" << '|' << std::endl
+              << std::endl;
+    for (ushort i = 0; i < contactsAdded; i++)
+    {
         std::cout << std::right << std::setw(ColumnWidth) << std::setfill(' ');
         std::cout << i << '|';
-        displayFormattedField(contacts[i].getFirstName());    std::cout << '|';
-        displayFormattedField(contacts[i].getLastName());     std::cout << '|';
+        displayFormattedField(contacts[i].getFirstName());
+        std::cout << '|';
+        displayFormattedField(contacts[i].getLastName());
+        std::cout << '|';
         displayFormattedField(contacts[i].getNickName());
         std::cout << std::endl;
         std::cout << std::endl;
     }
-    return ;
+    return;
 }
 
-void    PhoneBook::displayFormattedField(const std::string& str) const {
-    if (str.length() > ColumnWidth) {
+void PhoneBook::displayFormattedField(const std::string& str) const
+{
+    if (str.length() > ColumnWidth)
+    {
         std::cout << str.substr(0, ColumnWidth - 1) + ".";
     }
-    else { std::cout << str; }
+    else
+    {
+        std::cout << str;
+    }
+}
+
+PhoneBook::~PhoneBook()
+{
+    std::cout << "GOODBYE!!!" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    system("clear");
+}
+
+void PhoneBook::setBackground(const std::string& bgColor)
+{
+    std::cout << bgColor;
+
+    for (int i = 0; i < 50; ++i)
+    {
+        std::cout << std::string(200, ' ') << "\n";
+    }
+    std::cout << "\033[H";
+    std::cout.flush();
+    std::cout << TXT_BOLD << TXT_GREEN;
 }
 
 /* ************************************************************************** */

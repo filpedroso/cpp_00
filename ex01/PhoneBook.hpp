@@ -11,88 +11,87 @@
 /* ************************************************************************** */
 
 #ifndef PHONEBOOK_HPP
-# define PHONEBOOK_HPP
+#define PHONEBOOK_HPP
 
-#include <string>
-#include <thread>
+#include <cctype>
 #include <chrono>
 #include <cstdlib>
+#include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <iomanip>
-#include <cctype>
+#include <string>
+#include <thread>
 
 #include "Colors.hpp"
 
-
 const short MaxContacts = 8;
-const short NFields     = 5;
+const short NFields = 5;
 const short ColumnWidth = 10;
 
-
-namespace cmd {
-    enum   ECommand
-    {
-        ADD,
-        SEARCH,
-        EXIT,
-        INVALID
-    };
+namespace cmd
+{
+enum ECommand
+{
+    ADD,
+    SEARCH,
+    EXIT,
+    INVALID
+};
 }
 
-class Contact {
-    private:
-        std::string firstName;
-        std::string lastName;
-        std::string nickName;
-        std::string darkestSecret;
-        std::string phoneNum;
+class Contact
+{
+private:
+    std::string firstName;
+    std::string lastName;
+    std::string nickName;
+    std::string darkestSecret;
+    std::string phoneNum;
 
-    public:
-        Contact() {}
-        ~Contact() {}
+public:
+    Contact() {}
+    ~Contact() {}
 
-        void    displayItself();
+    void displayItself();
 
-        /* setters */
-        void setFirstName(const std::string& value)     { firstName = value; }
-        void setLastName(const std::string& value)      { lastName = value; }
-        void setNickName(const std::string& value)      { nickName = value; }
-        void setPhoneNum(const std::string& value)      { phoneNum = value; }
-        void setDarkestSecret(const std::string& value) { darkestSecret = value; }
+    /* setters */
+    void setFirstName(const std::string& value) { firstName = value; }
+    void setLastName(const std::string& value) { lastName = value; }
+    void setNickName(const std::string& value) { nickName = value; }
+    void setPhoneNum(const std::string& value) { phoneNum = value; }
+    void setDarkestSecret(const std::string& value) { darkestSecret = value; }
 
-        /* getters */
-        std::string getFirstName() const        { return firstName; }
-        std::string getLastName() const         { return lastName; }
-        std::string getNickName() const         { return nickName; }
-        std::string getPhoneNum() const         { return darkestSecret; }
-        std::string getDarkestSecret() const    { return phoneNum; }
+    /* getters */
+    std::string getFirstName() const { return firstName; }
+    std::string getLastName() const { return lastName; }
+    std::string getNickName() const { return nickName; }
+    std::string getPhoneNum() const { return darkestSecret; }
+    std::string getDarkestSecret() const { return phoneNum; }
 };
 
+class PhoneBook
+{
+private:
+    Contact contacts[MaxContacts];
+    Contact newContact;
+    ushort contactsAdded;
+    ushort oldestIdx;
 
-class PhoneBook {
-    private:
-        Contact     contacts[MaxContacts];
-        Contact     newContact;
-        ushort      contactsAdded;
-        ushort      oldestIdx;
+    void displayWelcome();
+    void setBackground(const std::string&);
+    cmd::ECommand promptForCommand();
+    void displayCommandList();
+    void addContact();
+    void searchContacts();
+    void displayContactList();
+    void displayFormattedField(const std::string&) const;
+    std::string promptForField(const std::string&);
 
-        void                displayWelcome();
-        void                setBackground(const std::string&);
-        cmd::ECommand       promptForCommand();
-        void                displayCommandList();
-        void                addContact();
-        void                searchContacts();
-        void                displayContactList();
-        void                displayFormattedField(const std::string&) const;
-        std::string         promptForField(const std::string&);
+public:
+    PhoneBook() : contactsAdded(0), oldestIdx(0) {}
+    ~PhoneBook();
 
-    public:
-        PhoneBook() : contactsAdded(0), oldestIdx(0) {}
-        ~PhoneBook();
-
-        void    run();
+    void run();
 };
-
 
 #endif

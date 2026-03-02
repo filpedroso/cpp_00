@@ -10,37 +10,45 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string>
-#include <iostream>
 #include <cctype>
+#include <iostream>
+#include <string>
 
-class Megaphone {
-    std::string amplified;
+class Megaphone
+{
+  public:
+    Megaphone() {}
+    ~Megaphone() {}
 
-    public:
-        Megaphone(const std::string voice) {
-            amplified = voice;
-            for (std::string::iterator it = amplified.begin(), end = amplified.end(); it != end; ++it) {
-                *it = std::toupper(static_cast<unsigned char>(*it));
-            }
+	void output()
+	{
+		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
+	}
+
+	void output(std::string voice)
+	{
+		for (std::string::iterator it = voice.begin(),
+            end = voice.end(); it != end; ++it)
+        {
+            *it =std::toupper(static_cast<unsigned char>(*it));
         }
-        Megaphone() : amplified("* LOUD AND UNBEARABLE FEEDBACK NOISE *") {}
-
-        void    output() const {
-            std::cout << amplified;
-        }
+        std::cout << voice;
+	}
 };
 
-int main(int argc, char **argv) {
+int	main(int argc, char **argv)
+{
+		Megaphone megaphone;
 
-    if (argc == 1) {
-        Megaphone megaphone;
-        megaphone.output();
-    } else {
-        for (int i = 1; i < argc; i++) {
-            Megaphone megaphone(argv[i]);
-            megaphone.output();
-        }
-    }
-    std::cout << std::endl;
+	if (argc == 1)
+	{
+		megaphone.output();
+	}
+	else
+	{
+		for (int i = 1; i < argc; i++) {
+			megaphone.output(argv[i]);
+		}
+	}
+	std::cout << std::endl;
 }
