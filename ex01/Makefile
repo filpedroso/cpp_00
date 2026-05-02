@@ -6,11 +6,11 @@
 #    By: fpedroso <fpedroso@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/17 20:42:00 by fpedroso          #+#    #+#              #
-#    Updated: 2026/05/01 19:48:34 by fpedroso         ###   ########.fr        #
+#    Updated: 2026/05/02 19:37:20 by fpedroso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = crappyPhoneBook
+NAME = phonebook
 CC = c++
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 

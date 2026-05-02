@@ -6,7 +6,7 @@
 /*   By: fpedroso <fpedroso@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:19:51 by fpedroso          #+#    #+#             */
-/*   Updated: 2026/05/02 16:30:11 by fpedroso         ###   ########.fr       */
+/*   Updated: 2026/05/02 19:44:05 by fpedroso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@
 #include <sstream>
 #include <string>
 
+
 #include "Colors.hpp"
 
 const short MaxContacts = 8;
 const short NFields = 5;
 const short ColumnWidth = 10;
+
+#define CLEAR_SCREEN "\033[2J\033[1;1H"
 
 namespace cmd
 {
@@ -64,8 +67,8 @@ public:
     std::string getFirstName() const { return firstName; }
     std::string getLastName() const { return lastName; }
     std::string getNickName() const { return nickName; }
-    std::string getPhoneNum() const { return darkestSecret; }
-    std::string getDarkestSecret() const { return phoneNum; }
+    std::string getPhoneNum() const { return phoneNum; }
+    std::string getDarkestSecret() const { return darkestSecret; }
 };
 
 class PhoneBook

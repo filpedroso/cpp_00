@@ -6,7 +6,7 @@
 /*   By: fpedroso <fpedroso@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 17:15:35 by fpedroso          #+#    #+#             */
-/*   Updated: 2026/05/02 19:25:17 by fpedroso         ###   ########.fr       */
+/*   Updated: 2026/05/02 19:45:50 by fpedroso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void PhoneBook::displayWelcome()
 {
 	std::cout << "WELCOME!!!" << std::endl;
 	sleep(1);
-	system("clear");
+	std::cout << CLEAR_SCREEN;
 }
 
 void PhoneBook::displayCommandList()
@@ -79,7 +79,7 @@ void PhoneBook::addContact()
 
 	if (oldestIdx == MaxContacts)
 		oldestIdx = 0;
-	system("clear");
+	std::cout << CLEAR_SCREEN;
 	newContact.setFirstName(promptForField("first name"));
 	newContact.setLastName(promptForField("last name"));
 	newContact.setNickName(promptForField("nick name"));
@@ -99,10 +99,10 @@ void PhoneBook::addContact()
 
 	contacts[contactsAdded] = newContact;
 	contactsAdded++;
-	system("clear");
+	std::cout << CLEAR_SCREEN;
 	std::cout << "Contact created successfully!" << std::endl;
 	sleep(1);
-	system("clear");
+	std::cout << CLEAR_SCREEN;
 }
 
 std::string PhoneBook::promptForField(const std::string &fieldName)
@@ -128,10 +128,10 @@ void PhoneBook::searchContacts()
 
 	if (contactsAdded == 0)
 	{
-		system("clear");
+		std::cout << CLEAR_SCREEN;
 		std::cout << "NO CONTACTS YET!!!" << std::endl;
 		sleep(1);
-		system("clear");
+		std::cout << CLEAR_SCREEN;
 		return;
 	}
 
@@ -150,20 +150,20 @@ void PhoneBook::searchContacts()
 		}
 		else
 		{
-			system("clear");
+			std::cout << CLEAR_SCREEN;
 			std::cout << "INVALID INPUT!!!" << std::endl;
 			sleep(2);
-			system("clear");
+			std::cout << CLEAR_SCREEN;
 		}
 	} while (!valid);
-	system("clear");
+	std::cout << CLEAR_SCREEN;
 	contacts[contactIdx].displayItself();
 	std::cout << std::endl;
 }
 
 void PhoneBook::displayContactList()
 {
-	std::system("clear");
+	std::cout << CLEAR_SCREEN;
 
 	std::cout << std::right << std::setfill(' ')
 			  << std::setw(ColumnWidth) << "INDEX"		<< '|'
@@ -200,7 +200,7 @@ void PhoneBook::displayFormattedField(const std::string &str) const
 
 PhoneBook::~PhoneBook()
 {
-	std::cout << "\033[2J\033[H"; // clear the alternate buffer
+	std::cout << CLEAR_SCREEN; // clear the alternate buffer
 	std::cout << "GOODBYE!!!" << std::endl;
 	sleep(1);
 	std::cout << "\033[?1049l"; // exits alternate buffer (and destroys it)
