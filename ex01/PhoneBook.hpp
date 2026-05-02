@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpedroso <fpedroso@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: fpedroso <fpedroso@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:19:51 by fpedroso          #+#    #+#             */
-/*   Updated: 2025/10/12 23:19:51 by fpedroso         ###   ########.fr       */
+/*   Updated: 2026/05/02 16:30:11 by fpedroso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 #define PHONEBOOK_HPP
 
 #include <cctype>
-#include <chrono>
+#include <unistd.h>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <thread>
 
 #include "Colors.hpp"
 
@@ -30,13 +29,13 @@ const short ColumnWidth = 10;
 
 namespace cmd
 {
-enum ECommand
-{
-    ADD,
-    SEARCH,
-    EXIT,
-    INVALID
-};
+    enum ECommand
+    {
+        ADD,
+        SEARCH,
+        EXIT,
+        INVALID
+    };
 }
 
 class Contact

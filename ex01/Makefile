@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fpedroso <fpedroso@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: fpedroso <fpedroso@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/17 20:42:00 by fpedroso          #+#    #+#              #
-#    Updated: 2025/10/17 20:42:00 by fpedroso         ###   ########.fr        #
+#    Updated: 2026/05/01 19:48:34 by fpedroso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

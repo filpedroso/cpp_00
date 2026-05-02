@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   megaphone.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpedroso <fpedroso@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: fpedroso <fpedroso@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 12:01:25 by fpedroso          #+#    #+#             */
-/*   Updated: 2025/09/28 12:01:25 by fpedroso         ###   ########.fr       */
+/*   Updated: 2026/05/01 19:59:23 by fpedroso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,10 @@ class Megaphone
 
 int	main(int argc, char **argv)
 {
-		Megaphone megaphone;
+	Megaphone megaphone;
 
 	if (argc == 1)
-	{
-		megaphone.output();
-	}
+        megaphone.output();
 	else
 	{
 		for (int i = 1; i < argc; i++) {
